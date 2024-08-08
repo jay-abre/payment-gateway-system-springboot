@@ -1,0 +1,40 @@
+server:
+  port: 8087
+
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/payment_gateway
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: notification-service
+
+sendgrid:
+  email: i_johnchristopher.ilacad@stratpoint.com
+  api-key: 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
+  template:
+    user-created: d-d03397d62f4f4e3aa85bbaac9477a523
+    transaction-created: d-8278d2f91be748fab1a024b3f955acc1
+    payment-succeeded: d-464ea9d969914586811fb96f97f63344
+    reconciliation-finished: d-a5993eeb392741b98f1fcd9ed3ec381d
+
+
+security:
+  basic:
+    enabled: false
+
+
+

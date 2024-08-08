@@ -5,28 +5,47 @@ spring:
   application:
     name: user-service
   datasource:
-    url: jdbc//localhost:5432/payment_gateway
+    url: jdbc:postgresql://localhost:5432/payment_gateway
     username: postgres
     password: postgres
+    hikari:
+      auto-commit: false
   jpa:
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
 
   kafka:
     bootstrap-servers: localhost:9092
 
-  redis:
-    host: localhost
-    port: 6379
-
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: your-issuer-uri
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 jwt:
-  secret: your-jwt-secret-key
+  secret: 3cfa76ef14937c1c0ea519f8fc057a80fcd04a7420f8e8bcd0a7567c272e007b
+  expiration-time: 3600000
+
+super-admin:
+  username: super_admin
+  email: superadmin@email.com
+  first-name: John
+  middle-name: Henry
+  last-name: Doe
+  mobile-number: +639123456789
+  password: Password123!
+
+
+logging:
+  level:
+    com.electric_titans.userservice: DEBUG # Set to warn for production
+
+stripe:
+  api:
+    key: sk_test_51PgOntCBvhIwNn1KLeSJHvVsoITYMB0XFRX6VOhvN9AF1l6rSapkUvJJ8OMYmYkAvXho2WNZuWrbmGl6a16xYFjX00Usvrkkby #sk_test_51PYgn7RvpDLCTJ2LrFNta4dQLcPYUWLiXRE5LB81MeT3KJ1QjksQ0VzydPUtiU5vsgRGujRfUVyTsN0YHdPovpz900rVtVCzsh

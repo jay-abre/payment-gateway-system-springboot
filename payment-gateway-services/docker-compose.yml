@@ -1,6 +1,17 @@
 version: '3.8'
 
 services:
+  kafbat-ui:
+    container_name: kafbat-ui
+    depends_on:
+      - kafka
+    image: ghcr.io/kafbat/kafka-ui:latest
+    ports:
+      - 8080:8080
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+
   postgres:
     image: postgres:13
     container_name: postgres
@@ -38,20 +49,22 @@ services:
     volumes:
       - redis_data:/data
 
-  user-service:
-    image: user-service:latest
-    depends_on:
-      - postgres
-      - kafka
-      - redis
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc//postgres:5432/payment_gateway
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
-      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
-      - SPRING_REDIS_HOST=redis
-    ports:
-      - "8081:8081"
+########### Services ###########
+
+#  user-service:
+#    image: jcilacad27/user-service:v3
+#    depends_on:
+#      - postgres
+#      - kafka
+#      - redis
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/payment_gateway
+#      - SPRING_DATASOURCE_USERNAME=postgres
+#      - SPRING_DATASOURCE_PASSWORD=postgres
+#      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+#      - SPRING_REDIS_HOST=redis
+#    ports:
+#      - "8081:8081"
 
 volumes:
   postgres_data:
